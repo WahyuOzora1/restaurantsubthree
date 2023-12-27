@@ -1,23 +1,45 @@
+import 'dart:io';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurantsubthree/common/colors.dart';
+import 'package:restaurantsubthree/common/navigation.dart';
 import 'package:restaurantsubthree/common/text_theme.dart';
 import 'package:restaurantsubthree/data/api/api_service.dart';
 import 'package:restaurantsubthree/data/db/database_helper.dart';
 import 'package:restaurantsubthree/data/models/response/restaurant_response_model.dart';
+import 'package:restaurantsubthree/data/preferences/preferences_helper.dart';
 import 'package:restaurantsubthree/provider/create_review_provider.dart';
 import 'package:restaurantsubthree/provider/database_provider.dart';
 import 'package:restaurantsubthree/provider/filter_restaurant_provider.dart';
 import 'package:restaurantsubthree/provider/get_detail_restaurant_provider.dart';
 import 'package:restaurantsubthree/provider/get_restaurant_provider.dart';
+import 'package:restaurantsubthree/provider/preferences_provider.dart';
+import 'package:restaurantsubthree/provider/scheduling_provider.dart';
 import 'package:restaurantsubthree/provider/search_restaurant_provider.dart';
 import 'package:restaurantsubthree/screen/detail_restaurant_page.dart';
 import 'package:restaurantsubthree/screen/home_page.dart';
 import 'package:restaurantsubthree/screen/list_restaurant_page.dart';
 import 'package:restaurantsubthree/screen/splash_spage.dart';
+import 'package:restaurantsubthree/utils/background_service.dart';
+import 'package:restaurantsubthree/utils/notification_helper.dart';
 import 'package:restaurantsubthree/widget/build_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final NotificationHelper notificationHelper = NotificationHelper();
+  final BackgroundService service = BackgroundService();
+  service.initializeIsolate();
+
+  if (Platform.isAndroid) {
+    await AndroidAlarmManager.initialize();
+  }
+  await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
   runApp(const MyApp());
 }
 
@@ -46,11 +68,20 @@ class MyApp extends StatelessWidget {
           create: (context) => ReviewProvider(apiService: ApiService()),
         ),
         ChangeNotifierProvider(
-            create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()))
+            create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
+        ChangeNotifierProvider(create: (_) => SchedulingProvider()),
+        ChangeNotifierProvider(
+          create: (_) => PreferencesProvider(
+            preferencesHelper: PreferencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
+            ),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
         theme: ThemeData(
             colorScheme: Theme.of(context)
                 .colorScheme

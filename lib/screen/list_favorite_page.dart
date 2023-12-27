@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurantsubthree/common/navigation.dart';
 import 'package:restaurantsubthree/data/models/response/restaurant_response_model.dart';
 import 'package:restaurantsubthree/provider/database_provider.dart';
 import 'package:restaurantsubthree/screen/detail_restaurant_page.dart';
@@ -83,13 +84,8 @@ class _ListFavoritepageState extends State<ListFavoritepage> {
               final Restaurant favoriteRestaurant =
                   listFavoriteRestaurants[index];
               return GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    DetailRestaurantPage.routeName,
-                    arguments: favoriteRestaurant,
-                  );
-                },
+                onTap: () => Navigation.intentWithData(
+                    DetailRestaurantPage.routeName, favoriteRestaurant),
                 child: Card(
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   child: Padding(

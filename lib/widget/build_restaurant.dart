@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:restaurantsubthree/common/navigation.dart';
 import 'package:restaurantsubthree/data/models/response/restaurant_response_model.dart';
 import 'package:restaurantsubthree/screen/detail_restaurant_page.dart';
 
 Widget buildRestaurantOne(BuildContext context, Restaurant restaurant) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, DetailRestaurantPage.routeName,
-          arguments: restaurant);
+      Navigation.intentWithData(DetailRestaurantPage.routeName, restaurant);
     },
     child: Card(
       child: Column(
@@ -58,8 +58,7 @@ Widget buildRestaurantOne(BuildContext context, Restaurant restaurant) {
 Widget buildRestaurantTwo(BuildContext context, Restaurant restaurant) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, DetailRestaurantPage.routeName,
-          arguments: restaurant);
+      Navigation.intentWithData(DetailRestaurantPage.routeName, restaurant);
     },
     child: Card(
         margin: const EdgeInsets.symmetric(vertical: 5),

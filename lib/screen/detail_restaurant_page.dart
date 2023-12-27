@@ -12,7 +12,7 @@ import 'package:restaurantsubthree/widget/build_menus.dart';
 import 'package:restaurantsubthree/widget/build_reviews.dart';
 
 class DetailRestaurantPage extends StatefulWidget {
-  static const routeName = '/restaurant_detail';
+  static const routeName = '/detail_restaurant';
   final Restaurant restaurant;
   const DetailRestaurantPage({super.key, required this.restaurant});
 

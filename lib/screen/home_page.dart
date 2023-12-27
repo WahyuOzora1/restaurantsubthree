@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:restaurantsubthree/screen/detail_restaurant_page.dart';
 import 'package:restaurantsubthree/screen/list_favorite_page.dart';
 import 'package:restaurantsubthree/screen/list_restaurant_page.dart';
+import 'package:restaurantsubthree/screen/settings_page.dart';
+import 'package:restaurantsubthree/utils/notification_helper.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -12,6 +15,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
+  final NotificationHelper _notificationHelper = NotificationHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(DetailRestaurantPage.routeName);
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,27 +65,7 @@ class _HomePageState extends State<HomePage> {
         const ListRestaurantPage(),
 
         /// Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const SettingsPage(),
 
         /// Messages page
         const ListFavoritepage()
