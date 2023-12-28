@@ -8,8 +8,8 @@ import 'package:restaurantsubthree/data/models/response/search_restaurant_respon
 class ApiService {
   static const String _baseUrl = 'https://restaurant-api.dicoding.dev/';
 
-  Future<RestaurantRespondModel> getRestaurants() async {
-    final response = await http.get(Uri.parse("${_baseUrl}list"));
+  Future<RestaurantRespondModel> getRestaurants(http.Client client) async {
+    final response = await client.get(Uri.parse("${_baseUrl}list"));
     try {
       if (response.statusCode == 200) {
         return RestaurantRespondModel.fromJson(json.decode(response.body));
@@ -21,8 +21,9 @@ class ApiService {
     }
   }
 
-  Future<RestaurantDetailRespondModel> getRestaurantsDetail(String id) async {
-    final response = await http.get(Uri.parse("${_baseUrl}detail/$id"));
+  Future<RestaurantDetailRespondModel> getRestaurantsDetail(
+      String id, http.Client client) async {
+    final response = await client.get(Uri.parse("${_baseUrl}detail/$id"));
     try {
       if (response.statusCode == 200) {
         return RestaurantDetailRespondModel.fromJson(
@@ -50,7 +51,7 @@ class ApiService {
   }
 
   Future<bool> postReviewRestaurant(
-      CustomerReviewRequest customerReview) async {
+      CustomerReviewRequest customerReview, http.Client client) async {
     try {
       final response = await http.post(
         Uri.parse("${_baseUrl}review"),

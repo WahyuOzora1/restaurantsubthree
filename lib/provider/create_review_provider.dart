@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurantsubthree/data/api/api_service.dart';
 import 'package:restaurantsubthree/data/models/request/customer_review_request.dart';
+import 'package:http/http.dart' as http;
 
 enum ResultReviewState { firstState, loading, success, error }
 
@@ -19,7 +20,7 @@ class ReviewProvider extends ChangeNotifier {
       _state = ResultReviewState.loading;
       notifyListeners();
 
-      bool isPost = await apiService.postReviewRestaurant(param);
+      bool isPost = await apiService.postReviewRestaurant(param, http.Client());
 
       if (isPost) {
         _state = ResultReviewState.success;

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:restaurantsubthree/data/api/api_service.dart';
 import 'package:restaurantsubthree/main.dart';
 import 'package:restaurantsubthree/utils/notification_helper.dart';
+import 'package:http/http.dart' as http;
 
 final ReceivePort port = ReceivePort();
 
@@ -27,7 +28,7 @@ class BackgroundService {
 
   static Future<void> callback() async {
     final NotificationHelper notificationHelper = NotificationHelper();
-    var result = await ApiService().getRestaurants();
+    var result = await ApiService().getRestaurants(http.Client());
     await notificationHelper.showNotification(
         flutterLocalNotificationsPlugin, result);
 

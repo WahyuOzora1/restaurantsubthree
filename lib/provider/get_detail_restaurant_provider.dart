@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurantsubthree/data/api/api_service.dart';
 import 'package:restaurantsubthree/data/models/response/detail_restaurant_response_mode.dart';
+import 'package:http/http.dart' as http;
 
 enum ResultDetailState { loading, noData, hasData, error }
 
@@ -23,7 +24,8 @@ class RestaurantDetailProvider extends ChangeNotifier {
     try {
       _state = ResultDetailState.loading;
       notifyListeners();
-      final detailRestaurant = await apiService.getRestaurantsDetail(id);
+      final detailRestaurant =
+          await apiService.getRestaurantsDetail(id, http.Client());
       if (detailRestaurant.restaurant.id == "") {
         _state = ResultDetailState.noData;
         notifyListeners();
