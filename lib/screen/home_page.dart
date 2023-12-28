@@ -48,27 +48,21 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_sharp)),
-            label: 'Notifications',
+            selectedIcon: Icon(Icons.favorite),
+            icon: Icon(Icons.favorite_border_outlined),
+            label: 'Favorites',
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.messenger_sharp),
-            ),
-            label: 'Messages',
+            selectedIcon: Icon(Icons.settings),
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
       ),
       body: <Widget>[
-        /// Home page
         const ListRestaurantPage(),
-
-        /// Notifications page
-        const SettingsPage(),
-
-        /// Messages page
-        const ListFavoritepage()
+        const ListFavoritepage(),
+        const SettingsPage()
       ][currentPageIndex],
     );
   }

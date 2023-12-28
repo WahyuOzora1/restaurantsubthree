@@ -5,7 +5,7 @@ class DateTimeHelper {
     // Date and Time Format
     final now = DateTime.now();
     final dateFormat = DateFormat('y/M/d');
-    const timeSpecific = "22:55:00";
+    const timeSpecific = "23:16:00";
     final completeFormat = DateFormat('y/M/d H:m:s');
 
     // Today Format

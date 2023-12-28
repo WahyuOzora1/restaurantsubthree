@@ -13,11 +13,25 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       body: Consumer<PreferencesProvider>(
         builder: (context, provider, child) {
-          return ListView(
-            children: [
-              Material(
-                child: ListTile(
-                  title: const Text('Scheduling News'),
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Settings',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Restaurant Notification'),
+                  subtitle: const Text('Enable Notification'),
                   trailing: Consumer<SchedulingProvider>(
                     builder: (context, scheduled, _) {
                       return Switch.adaptive(
@@ -29,8 +43,9 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                 ),
-              ),
-            ],
+                const Divider(),
+              ],
+            ),
           );
         },
       ),
