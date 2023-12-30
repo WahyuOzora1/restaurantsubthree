@@ -53,7 +53,7 @@ class ApiService {
   Future<bool> postReviewRestaurant(
       CustomerReviewRequest customerReview, http.Client client) async {
     try {
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse("${_baseUrl}review"),
         body: customerReview.toJson(),
       );

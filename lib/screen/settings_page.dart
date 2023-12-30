@@ -36,9 +36,10 @@ class SettingsPage extends StatelessWidget {
                   trailing: Consumer<SchedulingProvider>(
                     builder: (context, scheduled, _) {
                       return Switch.adaptive(
-                        value: scheduled.isScheduled,
+                        value: provider.isRestaurantNewsActive,
                         onChanged: (value) async {
                           scheduled.scheduledRestaurants(value);
+                          provider.enableDailyNews(value);
                         },
                       );
                     },
